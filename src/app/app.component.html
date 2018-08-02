@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <input type="text" [(ngModel)]="filteredStatus">
+      <br>
+      <button class="btn btn-primary" (click)="onAddServer()">Add Server</button>
+      <br><br>
+      <h2>App Status: {{ appStatus | async}}</h2>
+      <hr>
+      <div class="row" #v> 
+        <label>
+          <input type="radio" name="order" value="ascending" checked (change)="v.desc=!v.desc"> Ascending
+        </label>
+        <label>
+          <input type="radio" name="order" value="descending" (change)="v.desc=!v.desc"> Descending
+        </label>
+      </div>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let server of servers | sort:(v.desc ? 'desc' : 'asc')"
+          [ngClass]="getStatusClasses(server)">
+          <span
+            class="badge">
+            {{ server.status }}
+          </span>
+          <strong>{{ server.name }}</strong> |
+          {{ server.instanceType | reverse | uppercase }} |
+          {{ server.started | date:'fullDate' | uppercase }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
